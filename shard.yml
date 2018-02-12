@@ -1,0 +1,10 @@
+name: web3.cr
+version: 0.1.0
+
+authors:
+  - Tamás Szekeres <szektam2@gmail.com>
+
+description: |
+  Ethereum Crystal API.
+
+license: MIT
