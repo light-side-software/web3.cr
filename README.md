@@ -9,7 +9,7 @@ Add this to your application's `shard.yml`:
 ```yaml
 dependencies:
   web3.cr:
-    github: TamasSzekeres/web3.cr
+    github: light-side-software/web3.cr
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ pp web3.eth.syncing
 
 ## Contributing
 
-1. Fork it ( https://github.com/TamasSzekeres/web3.cr/fork )
+1. Fork it ( https://github.com/light-side-software/web3.cr/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
