@@ -1,5 +1,5 @@
-name: web3.cr
-version: 0.1.0
+name: web3
+version: 0.1.1
 
 authors:
   - Tamás Szekeres <szektam2@gmail.com>
