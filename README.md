@@ -8,7 +8,7 @@ Add this to your application's `shard.yml`:
 
 ```yaml
 dependencies:
-  web3.cr:
+  web3:
     github: light-side-software/web3.cr
 ```
 
