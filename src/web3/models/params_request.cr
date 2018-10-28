@@ -11,7 +11,7 @@ module Web3::Models
       params: {type: Array(ParamType), nilable: false},
     })
 
-    def initialize(@method : String, @params : Array(ParamType) = [] of ParamType, @jsonrpc : String = RpcClient::JSONRPC_VERSION, @id = 1)
+    def initialize(@method : String, @params : Array(ParamType) = [] of ParamType, @jsonrpc : String = JSONRPC_VERSION, @id = 1)
     end
   end
 end

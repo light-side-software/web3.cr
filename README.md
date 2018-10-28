@@ -17,7 +17,7 @@ dependencies:
 ```crystal
 require "web3"
 
-web3 = Web3::Client.new "http://localhost:8545"
+web3 = Web3::Client.new(RpcProvider.new("http://localhost:8545"))
 pp web3.client_version
 pp web3.eth.syncing
 ```
@@ -32,4 +32,4 @@ pp web3.eth.syncing
 
 ## Contributors
 
-- [TamasSzekeres](https://github.com/TamasSzekeres) Tamás Szekeres - creator, maintainer
+- [Tamás Szekeres](https://github.com/TamasSzekeres) creator, maintainer

@@ -7,13 +7,13 @@ require "../converters/big_int/hex_string_converter"
 module Web3::Models
   class TransactionObject
     JSON.mapping({
+      data: {type: String, nilable: false},
       from: {type: String, nilable: false},
-      to: {type: String, nilable: true},
       gas: {type: BigInt, nilable: true, converter: BigInt::HexStringConverter},
       gas_price: {key: "gasPrice", type: BigInt, nilable: true, converter: BigInt::HexStringConverter},
-      value: {type: BigInt, nilable: true, converter: BigInt::HexStringConverter},
-      data: {type: String, nilable: false},
       nonce: {type: BigInt, nilable: true, converter: BigInt::HexStringConverter},
+      to: {type: String, nilable: true},
+      value: {type: BigInt, nilable: true, converter: BigInt::HexStringConverter},
     })
 
     def initialize(@from : String, @to : String?, @gas : BigInt?,
@@ -29,7 +29,7 @@ module Web3::Models
       params: {type: Array(TransactionObject), nilable: false, getter: false, setter: false},
     })
 
-    def initialize(@method : String, transaction : TransactionObject, @jsonrpc : String = RpcClient::JSONRPC_VERSION, @id = 1)
+    def initialize(@method : String, transaction : TransactionObject, @jsonrpc : String = JSONRPC_VERSION, @id = 1)
       @params = [transaction]
     end
 

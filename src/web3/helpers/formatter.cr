@@ -2,29 +2,71 @@ require "big"
 
 module Web3::Helpers
   module Formatter
-    DEFAULT_BLOCKS = ["earliest", "latest", "pending"]
-
-    def self.block_string(block : (BigInt | String) = "latest") : String
-      case block
-        when BigInt then "0x" + block.as(BigInt).to_s(16)
-        when DEFAULT_BLOCKS[0], DEFAULT_BLOCKS[1], DEFAULT_BLOCKS[2] then block.as(String)
-        else raise ArgumentError.new("'block' must be a valid block number or one of #{DEFAULT_BLOCKS}")
+    struct ::Int
+      def to_block_param : String
+        String::ZERO_X + to_s(16).rjust_even
       end
     end
-  end
-end
 
+    struct ::BigInt
+      def to_block_param : String
+        String::ZERO_X + to_s(16).rjust_even
+      end
+    end
 
-class String
-  def zero_prefixed? : Bool
-    self.starts_with? "0x"
-  end
+    class ::String
+      ZERO_X = "0x"
+      DEFAULT_BLOCK_STRINGS = %w(earliest latest pending)
 
-  def strip_zero : String
-    if self.zero_prefixed?
-      self[2..-1]
-    else
-      self
+      def to_block_param : self
+        if DEFAULT_BLOCK_STRINGS.any? &.== self
+          self
+        elsif hex_param?
+          to_hex_param
+        else
+          raise "Not block param!"
+        end
+      end
+
+      def hex_param? : Bool
+        return false unless zero_prefixed?
+        chars = strip_zero.chars
+        chars.all?(&.hex?) && chars.size >= 2 && chars.size.even?
+      end
+
+      def to_hex_param : self
+        if zero_prefixed?
+          zero_striped = strip_zero
+          if zero_striped.chars.all? &.hex?
+            return ZERO_X + zero_striped.rjust_even
+          end
+        end
+        ZERO_X + to_slice.hexstring
+      end
+
+      def rjust_even(char : Char = '0') : self
+        rjust(Math.max(size + size % 2, 2), char)
+      end
+
+      def zero_prefixed? : Bool
+        starts_with? ZERO_X
+      end
+
+      def strip_zero : self
+        zero_prefixed? ? self[2..-1] : self
+      end
+    end
+
+    struct ::Slice(T)
+      def to_hex_param : String
+        String::ZERO_X + self.hexstring.rjust_even
+      end
+    end
+
+    struct ::Symbol
+      def to_block_param : String
+        to_s.to_block_param
+      end
     end
   end
 end

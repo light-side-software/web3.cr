@@ -13,7 +13,4 @@ module Web3::Models
       pulled_states: {key: "pulledStates", type: BigInt?, nilable: true, converter: BigInt::HexStringConverter},
     })
   end
-
-  class SyncingResponse < ResultResponse(SyncingResult | Bool | Nil)
-  end
 end

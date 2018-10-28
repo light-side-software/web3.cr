@@ -1,18 +1,16 @@
-require "./rpc_client"
 require "./models/*"
+require "./providers/base_provider"
 
 module Web3
   include Models
+    include Providers
 
   class Ssh
-    def initialize(@rpc : RpcClient)
+    def initialize(@provider : BaseProvider)
     end
 
     def version
-      @rpc.request BaseRequest.new("ssh_version"), ResultResponse(String)
-    end
-
-    def post
+      @provider.request BaseRequest.new("ssh_version"), ResultResponse(String)
     end
   end
 end
